@@ -28,7 +28,8 @@ describe('Registre des jeux (D-A1-04, D-A1-05)', () => {
     for (const jeu of registre.lister()) {
       expect(verifierJeu(jeu), jeu.fiche.id).toEqual([]);
     }
-  });
+    // Des parties complètes entre ordinateurs pour chaque jeu : plus long que les 5 s par défaut.
+  }, 120_000);
 });
 
 describe('Noyau indépendant des jeux (D-A1-10)', () => {

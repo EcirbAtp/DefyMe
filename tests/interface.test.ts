@@ -66,10 +66,17 @@ describe('Coquille de l’appli (D-D-01, D-D-02)', () => {
     expect(JSON.parse(stockage.getItem('defyme.reglages.v1')!)).toMatchObject({ pseudo: 'Fab', langue: 'en' });
   });
 
-  it('propose les 8 couleurs et le son', () => {
+  it('propose les 8 couleurs, appliquées à l’interface, et le son', () => {
     const { racine, appli } = demarrer();
     aller(appli, '#/parametres');
-    expect(racine.querySelectorAll('input[name="couleur"]')).toHaveLength(8);
+    const couleurs = racine.querySelectorAll<HTMLInputElement>('input[name="couleur"]');
+    expect(couleurs).toHaveLength(8);
+    couleurs[3]!.checked = true;
+    couleurs[3]!.dispatchEvent(new Event('change'));
+    expect(appli.reglages().couleur).toBe('#fdd835');
+    expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#fdd835');
+    expect(document.documentElement.style.getPropertyValue('--accent-texte')).toBe('#000000');
+
     const son = racine.querySelector<HTMLInputElement>('#son')!;
     son.checked = false;
     son.dispatchEvent(new Event('change'));

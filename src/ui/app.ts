@@ -2,6 +2,7 @@ import { changerLangue, langue, t } from '../i18n';
 import type { Langue } from '../noyau/contrat';
 import type { Registre } from '../noyau/registre';
 import { ecrireReglages, lireReglages, type Reglages, type Stockage } from '../stockage/reglages';
+import { appliquerCouleur } from './couleur';
 import { el } from './dom';
 import { preparerInstallation } from './installation';
 import { afficherMenuJeux, afficherPageJeu } from './menu-jeux';
@@ -26,6 +27,7 @@ export interface Appli {
 export function demarrerAppli(racine: HTMLElement, deps: Dependances): Appli {
   let reglages = lireReglages(deps.stockage, deps.langueDuTelephone);
   changerLangue(reglages.langue);
+  appliquerCouleur(reglages.couleur);
 
   const zoneInstallation = el('div', { class: 'zone-installation' });
   const contenu = el('main', { id: 'contenu', tabindex: '-1' });
@@ -39,6 +41,7 @@ export function demarrerAppli(racine: HTMLElement, deps: Dependances): Appli {
     const langueChangee = nouveaux.langue !== reglages.langue;
     reglages = nouveaux;
     ecrireReglages(deps.stockage, reglages);
+    appliquerCouleur(reglages.couleur);
     if (langueChangee) {
       changerLangue(reglages.langue);
       afficher();

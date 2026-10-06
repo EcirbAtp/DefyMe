@@ -20,7 +20,9 @@ src/
   noyau/       contrat de jeu, registre, session de partie, hasard à graine
   jeux/<id>/   un dossier par jeu (index.ts exporte le jeu par défaut)
     petits-chevaux/  règles, plateau, ordinateur, écran Phaser, pack de thème
-  ui/          menus Jeux et Paramètres, page de partie sur un seul téléphone
+  reseau/      salons WebRTC en étoile autour de l'hôte, sans connaître aucun jeu
+  salon/       logique des salons : lien du QR code, places, robots, lancement
+  ui/          menus Jeux et Paramètres, partie sur un seul téléphone, salons
   i18n/        textes français et anglais
   stockage/    réglages gardés sur le téléphone
 tests/         tests automatiques (Vitest)
@@ -39,8 +41,9 @@ tests/         tests automatiques (Vitest)
    sérialisable, hasard issu de la graine, ordinateur dans les coups permis
    et dans le temps imparti).
 
-Le jeu apparaît alors tout seul dans le menu Jeux : rien à modifier dans le
-noyau. Le jeu d'exemple [`tests/exemples/allumettes.ts`](tests/exemples/allumettes.ts)
+Le jeu apparaît alors tout seul dans le menu Jeux, et se joue aussi en
+salon (réseau, robots compris) : rien à modifier dans le noyau ni dans le
+réseau. Le jeu d'exemple [`tests/exemples/allumettes.ts`](tests/exemples/allumettes.ts)
 sert de modèle.
 
 ## Exigences

@@ -51,6 +51,51 @@ export const fr = {
   'partie.perdu': '{nom} a gagné. Tu feras mieux la prochaine fois !',
   'partie.rejouer': 'Rejouer',
   'partie.erreurEcran': "L'écran du jeu n'a pas pu s'ouvrir. Recharge la page.",
+
+  // --- Salons (étape 3) ---
+  'salon.plusieurs': 'Jouer à plusieurs',
+  'salon.seul': "Jouer seul contre l'ordinateur",
+  'salon.creer': 'Créer un salon',
+  'salon.rejoindre': 'Rejoindre un salon',
+  'salon.creation': 'Création du salon…',
+  'salon.ouvert': "Salon ouvert ! Donne ce code à tes amis, ou fais-leur scanner le QR code avec l'appareil photo.",
+  'salon.code': 'Code du salon',
+  'salon.qr': 'QR code du salon {code}',
+  'salon.joueurs': 'Joueurs',
+  'salon.places': '{n} sur {max}',
+  'salon.hote': 'hôte',
+  'salon.toi': 'toi',
+  'salon.robot': '{nom} · {niveau}',
+  'salon.ajouterRobot': 'Ajouter un ordinateur',
+  'salon.retirerRobot': 'Retirer {nom}',
+  'salon.complet': 'Le salon est complet.',
+  'salon.lancer': 'Lancer la partie',
+  'salon.manque': 'Il manque {n} joueur(s) : attends tes amis ou ajoute des ordinateurs.',
+  'salon.enTrop': 'Il y a {n} joueur(s) de trop : retire des ordinateurs.',
+  'salon.pret': 'Tout le monde est là ? Lance la partie !',
+  'salon.fermer': 'Fermer le salon',
+  'salon.liaisonPerdue': 'Liaison avec le serveur perdue : plus personne ne peut entrer, mais les joueurs déjà là peuvent jouer.',
+  'salon.saisirCode': 'Tape le code de 4 caractères affiché sur le téléphone de l’hôte, ou scanne son QR code avec l’appareil photo.',
+  'salon.codeInvalide': 'Le code a 4 caractères : des lettres et des chiffres.',
+  'salon.connexion': 'Connexion au salon…',
+  'salon.entrer': 'Entrer',
+  'salon.attente': "Tu es dans le salon {code}. La partie commencera quand l'hôte la lancera.",
+  'salon.quitter': 'Quitter le salon',
+  'salon.reessayer': 'Réessayer',
+  'salon.depart': "{nom} a quitté la partie : l'ordinateur joue à sa place.",
+  'salon.erreur.config-introuvable':
+    "Le jeu en réseau n'est pas encore disponible : l'adresse du serveur de mise en relation est vide ou introuvable (fichier config-reseau.json).",
+  'salon.erreur.serveur-injoignable':
+    'Le serveur de mise en relation ne répond pas. Vérifie ta connexion Internet, ou réessaie plus tard : le quota gratuit du jour est peut-être atteint.',
+  'salon.erreur.salon-introuvable': 'Aucun salon ouvert avec ce code. Vérifie les 4 caractères auprès de l’hôte.',
+  'salon.erreur.salon-plein': 'Ce salon est complet.',
+  'salon.erreur.version-differente':
+    "Ton appli n'a pas la même version que celle de l'hôte. Mettez-la à jour tous les deux (fermez puis rouvrez l'appli), puis réessayez.",
+  'salon.erreur.partie-lancee': 'La partie de ce salon a déjà commencé.',
+  'salon.erreur.connexion-directe-impossible':
+    "Connexion directe impossible entre vos deux téléphones (réseaux trop différents, par exemple 4G et Wi-Fi). Connectez-vous au même Wi-Fi, puis réessayez.",
+  'salon.erreur.salon-ferme': "L'hôte a fermé le salon, ou la liaison avec lui est perdue.",
+  'salon.erreur.inconnue': "Quelque chose n'a pas marché. Réessaie.",
 } as const;
 
 export type CleTexte = keyof typeof fr;

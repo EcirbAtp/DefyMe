@@ -56,6 +56,8 @@ export interface Prise {
 
 export interface Etat {
   options: Options;
+  /** Pseudo et couleur de chaque joueur, pour l'écran. */
+  joueurs: Joueur[];
   /** Côté du plateau de chaque joueur (voir `COTES`). */
   cotes: number[];
   /** Progression de chaque cheval, par joueur (voir plateau.ts). */
@@ -83,6 +85,7 @@ export function etatInitial(joueurs: readonly Joueur[], graine: Graine, options:
   const courant = h.entier(0, joueurs.length - 1);
   return {
     options: { ...options },
+    joueurs: joueurs.map((j) => ({ pseudo: j.pseudo, couleur: j.couleur })),
     cotes: cotesPour(joueurs.length),
     chevaux: joueurs.map(() => Array.from({ length: CHEVAUX }, () => ECURIE)),
     courant,

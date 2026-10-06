@@ -21,6 +21,7 @@ const joueurs = (n: number) => Array.from({ length: n }, (_, i) => ({ pseudo: `J
 function etat(chevaux: number[][], de: number | null, options: Partial<Options> = {}): Etat {
   return {
     options: { ...OPTIONS_PAR_DEFAUT, ...options },
+    joueurs: joueurs(chevaux.length),
     cotes: chevaux.length === 2 ? [0, 2] : [0, 1, 2, 3].slice(0, chevaux.length),
     chevaux,
     courant: 0,

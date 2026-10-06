@@ -263,3 +263,70 @@ a {
   max-width: 528px;
   margin: 0 auto;
 }
+
+/* Préparation et écran d'une partie (D-A2-07, D-C-04) */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.preparation {
+  margin-bottom: 16px;
+}
+
+.preparation .bouton {
+  margin-top: 16px;
+}
+
+.variantes {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.variantes summary {
+  min-height: var(--tactile);
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.barre-partie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.ecran-jeu {
+  width: 100%;
+  /* Format portrait commun aux écrans de jeu (600 × 820), sans dépasser l'écran. */
+  height: min(calc(100vw * 820 / 600), calc(100dvh - 2 * var(--tactile) - 72px));
+  max-height: calc(528px * 820 / 600);
+}
+
+.ecran-jeu canvas {
+  touch-action: manipulation;
+}
+
+.fin-partie {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--tactile) + 32px + env(safe-area-inset-bottom));
+  max-width: 528px;
+  margin: 0 auto;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.2);
+}
+
+.fin-partie p {
+  margin: 0;
+}

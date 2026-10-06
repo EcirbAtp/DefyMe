@@ -35,17 +35,3 @@ export function afficherMenuJeux(conteneur: HTMLElement, registre: Registre, lan
     jeux.length > 0 ? liste : el('p', { class: 'vide' }, t('jeux.vide')),
   );
 }
-
-/** Page d'un jeu. L'écran Phaser y sera branché avec le premier jeu (étape 2). */
-export function afficherPageJeu(conteneur: HTMLElement, registre: Registre, id: string, langue: Langue): void {
-  const jeu = registre.trouver(id);
-  if (!jeu) {
-    afficherMenuJeux(conteneur, registre, langue);
-    return;
-  }
-  conteneur.replaceChildren(
-    el('h1', {}, `${jeu.fiche.icone} ${jeu.fiche.nom[langue]}`),
-    el('p', {}, t('jeux.bientot')),
-    el('a', { class: 'bouton', href: '#/jeux' }, t('jeux.retour')),
-  );
-}

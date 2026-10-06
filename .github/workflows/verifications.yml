@@ -1,11 +1,10 @@
 # Vérifications automatiques à chaque demande de fusion (D-T-04) :
 # types, tests des règles et construction de l'appli.
+# Après fusion dans main, publication.yml refait ces vérifications avant la mise en ligne.
 name: Vérifications
 
 on:
   pull_request:
-  push:
-    branches: [main]
 
 permissions:
   contents: read

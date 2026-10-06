@@ -1,0 +1,265 @@
+/*
+ * Thème générique par défaut (D-B-01). Les couleurs sont des variables pour
+ * qu'un pack de thème puisse les remplacer plus tard (D-A1-09, D-B-02).
+ * Conçu pour le portrait et une main ; zones tactiles d'au moins 44 px (D-C-04).
+ */
+:root {
+  --fond: #f4f1ea;
+  --surface: #ffffff;
+  --texte: #1f2430;
+  --texte-discret: #5b6170;
+  --accent: #1b2a4a;
+  --accent-texte: #ffffff;
+  --bordure: #d9d4c7;
+  --rayon: 14px;
+  --tactile: 48px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #12161f;
+    --surface: #1c2230;
+    --texte: #eceef3;
+    --texte-discret: #a3a9b8;
+    --accent: #f2c14e;
+    --accent-texte: #12161f;
+    --bordure: #2e3546;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#appli {
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) 16px calc(var(--tactile) + 24px + env(safe-area-inset-bottom));
+}
+
+main {
+  outline: none;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 20px 0 16px;
+}
+
+a {
+  color: inherit;
+}
+
+.vide,
+.discret {
+  color: var(--texte-discret);
+}
+
+.discret {
+  font-size: 0.9rem;
+}
+
+/* Onglets du bas : Jeux et Paramètres, à portée de pouce. */
+.onglets {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1px solid var(--bordure);
+}
+
+.onglet {
+  flex: 1;
+  max-width: 260px;
+  min-height: var(--tactile);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rayon);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.onglet[aria-current='page'] {
+  background: var(--accent);
+  color: var(--accent-texte);
+}
+
+/* Menu Jeux */
+.cartes-jeux {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.carte-jeu {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  text-decoration: none;
+}
+
+.carte-jeu__icone {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.carte-jeu__texte {
+  display: grid;
+}
+
+.carte-jeu__joueurs,
+.carte-jeu__description {
+  color: var(--texte-discret);
+  font-size: 0.9rem;
+}
+
+/* Boutons */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tactile);
+  padding: 0 18px;
+  border: 0;
+  border-radius: var(--rayon);
+  background: var(--accent);
+  color: var(--accent-texte);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bouton--discret {
+  background: transparent;
+  color: var(--texte);
+  border: 1px solid var(--bordure);
+}
+
+/* Paramètres */
+.parametres {
+  display: grid;
+  gap: 8px;
+}
+
+.parametres label,
+.etiquette {
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.parametres small {
+  color: var(--texte-discret);
+}
+
+.parametres input[type='text'],
+.parametres select {
+  min-height: var(--tactile);
+  padding: 0 12px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font: inherit;
+}
+
+.parametres .ligne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tactile);
+}
+
+.parametres input[type='checkbox'] {
+  width: 28px;
+  height: 28px;
+  accent-color: var(--accent);
+}
+
+.couleurs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.couleurs input {
+  appearance: none;
+  width: var(--tactile);
+  height: var(--tactile);
+  margin: 0;
+  border-radius: 50%;
+  background: var(--pastille);
+  border: 3px solid transparent;
+  cursor: pointer;
+}
+
+.couleurs input:checked {
+  border-color: var(--texte);
+  box-shadow: inset 0 0 0 3px var(--fond);
+}
+
+.couleurs input:focus-visible,
+.onglet:focus-visible,
+.bouton:focus-visible,
+.carte-jeu:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Bannière d'installation et message de mise à jour */
+.banniere,
+.toast {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.banniere p {
+  margin: 0;
+}
+
+.banniere__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--tactile) + 32px + env(safe-area-inset-bottom));
+  max-width: 528px;
+  margin: 0 auto;
+}

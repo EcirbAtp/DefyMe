@@ -9,7 +9,8 @@ import { OPTIONS_PAR_DEFAUT, coupsPermis, estFini, etatInitial, jouer, vuePour, 
 const huitAmericain: Jeu<Etat, Coup, Vue, Options> = {
   fiche: {
     id: 'huit-americain',
-    version: 1,
+    // Version 2 : l'état garde les pseudos et couleurs des joueurs, pour l'écran.
+    version: 2,
     nom: { fr: 'Huit américain', en: 'Crazy Eights' },
     description: {
       fr: 'Pose une carte de même couleur ou de même valeur. Le premier sans cartes gagne.',
@@ -20,6 +21,21 @@ const huitAmericain: Jeu<Etat, Coup, Vue, Options> = {
     joueursMax: 8,
   },
   optionsParDefaut: OPTIONS_PAR_DEFAUT,
+  variantes: [
+    {
+      cle: 'cartesParMain',
+      nom: { fr: 'Cartes distribuées', en: 'Cards dealt' },
+      choix: [5, 6, 7, 8, 10].map((n) => ({ valeur: n, nom: { fr: `${n} cartes`, en: `${n} cards` } })),
+    },
+    {
+      cle: 'cumul',
+      nom: { fr: 'Contrer un « pioche 2 » avec un autre', en: 'Stack “draw 2” cards' },
+      choix: [
+        { valeur: true, nom: { fr: 'Oui, les pénalités s’additionnent', en: 'Yes, penalties add up' } },
+        { valeur: false, nom: { fr: 'Non', en: 'No' } },
+      ],
+    },
+  ],
   etatInitial,
   joueurCourant: (etat) => etat.courant,
   coupsPermis,
@@ -29,9 +45,8 @@ const huitAmericain: Jeu<Etat, Coup, Vue, Options> = {
   ordinateur(etat, joueur, reflexion) {
     return choisirCoup(vuePour(etat, joueur), coupsPermis(etat, joueur), reflexion);
   },
-  // L'écran arrive avec le mode un téléphone et le réseau (suite de l'étape 4).
   async ecran() {
-    return class EcranHuitAmericain {};
+    return (await import('./ecran')).EcranHuitAmericain;
   },
 };
 

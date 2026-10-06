@@ -53,6 +53,8 @@ export const OPTIONS_PAR_DEFAUT: Options = {
 
 export interface Etat {
   options: Options;
+  /** Pseudo et couleur de chaque joueur, dans l'ordre des places : information publique. */
+  joueurs: Joueur[];
   /** Main de chaque joueur, triée. Cachée aux autres (D-A2-03). */
   mains: Carte[][];
   /** Pioche face cachée ; le dessus est le dernier élément. */
@@ -88,6 +90,8 @@ export type Coup =
 export interface Vue {
   joueur: number;
   options: Options;
+  /** Pseudo et couleur de chaque joueur. */
+  joueurs: Joueur[];
   /** Sa propre main, et seulement la sienne. */
   main: Carte[];
   /** Nombre de cartes de chaque joueur. */
@@ -137,6 +141,7 @@ export function etatInitial(joueurs: readonly Joueur[], graine: Graine, optionsR
 
   return {
     options,
+    joueurs: joueurs.map((j) => ({ pseudo: j.pseudo, couleur: j.couleur })),
     mains,
     pioche,
     defausse: [premiere],
@@ -171,18 +176,17 @@ export function dessus(etat: Etat): Carte {
   return etat.defausse[etat.defausse.length - 1] as Carte;
 }
 
+/** Ce qu'il faut savoir de la table pour connaître les coups permis : la vue d'un joueur suffit. */
+type Table = Pick<Vue, 'options' | 'couleur' | 'dessus' | 'penalite' | 'piochee'>;
+
 /** Vrai si la carte peut se poser maintenant (hors pénalité en cours). */
-export function posable(etat: Etat, carte: Carte): boolean {
+export function posable(etat: Etat | Table, carte: Carte): boolean {
   if (effetDe(etat.options, carte) === 'joker') return true;
-  return carte.couleur === etat.couleur || carte.rang === dessus(etat).rang;
+  const haut = 'dessus' in etat ? etat.dessus : dessus(etat);
+  return carte.couleur === etat.couleur || carte.rang === haut.rang;
 }
 
-/** Cartes encore disponibles à la pioche, défausse remélangée comprise. */
-function cartesAPiocher(etat: Etat): number {
-  return etat.pioche.length + etat.defausse.length - 1;
-}
-
-function coupsPoser(etat: Etat, cartes: readonly Carte[]): Coup[] {
+function coupsPoser(etat: Table, cartes: readonly Carte[]): Coup[] {
   const coups: Coup[] = [];
   const vues: Carte[] = [];
   for (const carte of cartes) {
@@ -199,20 +203,30 @@ function coupsPoser(etat: Etat, cartes: readonly Carte[]): Coup[] {
 }
 
 export function coupsPermis(etat: Etat, joueur: number): Coup[] {
-  if (etat.gagnants !== null || joueur !== etat.courant) return [];
-  const main = etat.mains[joueur] as Carte[];
+  return coupsDeLaVue(vuePour(etat, joueur));
+}
 
-  if (etat.penalite > 0) {
-    const contres = etat.options.cumul ? main.filter((c) => effetDe(etat.options, c) === 'piocher2') : [];
-    return [...coupsPoser(etat, contres), { type: 'piocher' }];
+/**
+ * Coups permis calculés à partir de la seule vue du joueur : les règles et
+ * l'écran (qui ne connaît que la vue) partagent ainsi le même calcul.
+ */
+export function coupsDeLaVue(vue: Vue): Coup[] {
+  if (vue.gagnants !== null || vue.joueur !== vue.courant) return [];
+  const { main } = vue;
+
+  if (vue.penalite > 0) {
+    const contres = vue.options.cumul ? main.filter((c) => effetDe(vue.options, c) === 'piocher2') : [];
+    return [...coupsPoser(vue, contres), { type: 'piocher' }];
   }
-  if (etat.piochee) {
-    const coups = posable(etat, etat.piochee) ? coupsPoser(etat, [etat.piochee]) : [];
+  if (vue.piochee) {
+    const coups = posable(vue, vue.piochee) ? coupsPoser(vue, [vue.piochee]) : [];
     return [...coups, { type: 'passer' }];
   }
-  const jouables = coupsPoser(etat, main.filter((c) => posable(etat, c)));
+  const jouables = coupsPoser(vue, main.filter((c) => posable(vue, c)));
   if (jouables.length > 0) return jouables;
-  return [cartesAPiocher(etat) > 0 ? { type: 'piocher' } : { type: 'passer' }];
+  // Cartes encore disponibles à la pioche, défausse remélangée comprise.
+  const aPiocher = vue.pioche + vue.defausse.length - 1;
+  return [aPiocher > 0 ? { type: 'piocher' } : { type: 'passer' }];
 }
 
 /** Place du joueur suivant dans le sens du jeu, `pas` places plus loin. */
@@ -320,6 +334,7 @@ export function vuePour(etat: Etat, joueur: number): Vue {
   return {
     joueur,
     options: etat.options,
+    joueurs: etat.joueurs,
     main: etat.mains[joueur] ?? [],
     nombreCartes: etat.mains.map((m) => m.length),
     dessus: dessus(etat),

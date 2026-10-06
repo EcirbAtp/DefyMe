@@ -20,6 +20,8 @@ src/
   noyau/       contrat de jeu, registre, session de partie, hasard à graine
   jeux/<id>/   un dossier par jeu (index.ts exporte le jeu par défaut)
     petits-chevaux/  règles, plateau, ordinateur, écran Phaser, pack de thème
+    huit-americain/  règles, ordinateur, présentation (testée sans affichage),
+                     écran Phaser, pack de thème
   ui/          menus Jeux et Paramètres, page de partie sur un seul téléphone
   i18n/        textes français et anglais
   stockage/    réglages gardés sur le téléphone

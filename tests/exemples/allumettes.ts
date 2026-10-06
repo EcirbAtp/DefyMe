@@ -15,7 +15,7 @@ export type Etat = {
 export type Coup = { prendre: 1 | 2 | 3 };
 
 /** Probabilité de jouer le coup gagnant (sinon un coup au hasard), selon le niveau. */
-const JUSTESSE: Record<NiveauOrdinateur, number> = { 1: 0, 2: 0.25, 3: 0.5, 4: 0.75, 5: 1 };
+const JUSTESSE: Record<NiveauOrdinateur, number> = { 1: 0, 2: 0.5, 3: 1 };
 
 export const allumettes: Jeu<Etat, Coup, Etat, { depart: number }> = {
   fiche: {

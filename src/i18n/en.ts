@@ -10,7 +10,6 @@ export const en: Record<CleTexte, string> = {
   'jeux.vide': 'The first games are coming soon: Ludo, then Crazy Eights.',
   'jeux.joueurs': '{min} to {max} players',
   'jeux.joueursFixe': '{n} players',
-  'jeux.bientot': "This game's screen is coming in a future version.",
   'jeux.retour': 'Back to games',
 
   'parametres.titre': 'Settings',
@@ -35,4 +34,23 @@ export const en: Record<CleTexte, string> = {
   'mise-a-jour.bouton': 'Update',
 
   'joueur.parDefaut': 'Player',
+
+  'partie.adversaires': 'Opponents',
+  'partie.adversairesN': '{n} computer player(s)',
+  'partie.niveau': 'Computer level',
+  'partie.niveau1': 'Easy',
+  'partie.niveau2': 'Medium',
+  'partie.niveau3': 'Hard',
+  'partie.variantes': 'Rule variants',
+  'partie.jouer': 'Play',
+  'partie.enCours': 'A game is in progress on this phone.',
+  'partie.reprendre': 'Resume game',
+  'partie.nouvelle': 'New game',
+  'partie.quitter': 'Quit',
+  'partie.toi': 'You',
+  'partie.ordinateur': 'CPU {n}',
+  'partie.gagne': 'Well done, you won!',
+  'partie.perdu': '{nom} won. Better luck next time!',
+  'partie.rejouer': 'Play again',
+  'partie.erreurEcran': 'The game screen could not open. Please reload the page.',
 };

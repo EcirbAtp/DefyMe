@@ -8,7 +8,6 @@ export const fr = {
   'jeux.vide': 'Les premiers jeux arrivent bientôt : Petits chevaux, puis Huit américain.',
   'jeux.joueurs': '{min} à {max} joueurs',
   'jeux.joueursFixe': '{n} joueurs',
-  'jeux.bientot': "L'écran de ce jeu arrive dans une prochaine version.",
   'jeux.retour': 'Retour aux jeux',
 
   'parametres.titre': 'Paramètres',
@@ -33,6 +32,25 @@ export const fr = {
   'mise-a-jour.bouton': 'Mettre à jour',
 
   'joueur.parDefaut': 'Joueur',
+
+  'partie.adversaires': 'Adversaires',
+  'partie.adversairesN': '{n} ordinateur(s)',
+  'partie.niveau': "Niveau de l'ordinateur",
+  'partie.niveau1': 'Facile',
+  'partie.niveau2': 'Moyen',
+  'partie.niveau3': 'Difficile',
+  'partie.variantes': 'Variantes de règles',
+  'partie.jouer': 'Jouer',
+  'partie.enCours': 'Une partie est en cours sur ce téléphone.',
+  'partie.reprendre': 'Reprendre la partie',
+  'partie.nouvelle': 'Nouvelle partie',
+  'partie.quitter': 'Quitter',
+  'partie.toi': 'Toi',
+  'partie.ordinateur': 'Ordi {n}',
+  'partie.gagne': 'Bravo, tu as gagné !',
+  'partie.perdu': '{nom} a gagné. Tu feras mieux la prochaine fois !',
+  'partie.rejouer': 'Rejouer',
+  'partie.erreurEcran': "L'écran du jeu n'a pas pu s'ouvrir. Recharge la page.",
 } as const;
 
 export type CleTexte = keyof typeof fr;

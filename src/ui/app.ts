@@ -5,7 +5,8 @@ import { ecrireReglages, lireReglages, type Reglages, type Stockage } from '../s
 import { appliquerCouleur } from './couleur';
 import { el } from './dom';
 import { preparerInstallation } from './installation';
-import { afficherMenuJeux, afficherPageJeu } from './menu-jeux';
+import { afficherMenuJeux } from './menu-jeux';
+import { afficherPageJeu, quitterPartie, type Monteur } from './partie';
 import { afficherParametres } from './parametres';
 
 /**
@@ -17,6 +18,8 @@ export interface Dependances {
   stockage: Stockage | undefined;
   langueDuTelephone: Langue;
   version: string;
+  /** Pour les tests : remplace le montage de l'écran Phaser des jeux. */
+  monterEcran?: Monteur;
 }
 
 export interface Appli {
@@ -62,9 +65,16 @@ export function demarrerAppli(racine: HTMLElement, deps: Dependances): Appli {
     actif.setAttribute('aria-current', 'page');
     inactif.removeAttribute('aria-current');
 
+    quitterPartie();
     if (page === 'parametres') afficherParametres(contenu, reglages, enregistrer, deps.version);
-    else if (page === 'jeu' && id) afficherPageJeu(contenu, deps.registre, decodeURIComponent(id), langue());
-    else afficherMenuJeux(contenu, deps.registre, langue());
+    else if (page === 'jeu' && id) {
+      afficherPageJeu(contenu, deps.registre, decodeURIComponent(id), {
+        langue: langue(),
+        reglages,
+        stockage: deps.stockage,
+        monter: deps.monterEcran,
+      });
+    } else afficherMenuJeux(contenu, deps.registre, langue());
   }
 
   window.addEventListener('hashchange', afficher);

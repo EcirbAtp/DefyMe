@@ -19,7 +19,8 @@ npm run build      # version de production dans dist/
 src/
   noyau/       contrat de jeu, registre, session de partie, hasard à graine
   jeux/<id>/   un dossier par jeu (index.ts exporte le jeu par défaut)
-  ui/          menus Jeux et Paramètres (HTML et CSS simples)
+    petits-chevaux/  règles, plateau, ordinateur, écran Phaser, pack de thème
+  ui/          menus Jeux et Paramètres, page de partie sur un seul téléphone
   i18n/        textes français et anglais
   stockage/    réglages gardés sur le téléphone
 tests/         tests automatiques (Vitest)
@@ -30,7 +31,9 @@ tests/         tests automatiques (Vitest)
 1. Créer `src/jeux/<id>/index.ts` qui exporte par défaut un objet respectant
    l'interface `Jeu` de [`src/noyau/contrat.ts`](src/noyau/contrat.ts) :
    fiche, `etatInitial`, `joueurCourant`, `coupsPermis`, `jouer`, `estFini`,
-   `vuePour`, `ordinateur` (niveaux 1 à 5) et `ecran`.
+   `vuePour`, `ordinateur` (niveaux 1 à 3) et `ecran`, plus ses `variantes`
+   de règles s'il en a. La scène Phaser dessine sur un format portrait commun
+   de 600 × 820 (`ECRAN` dans le contrat).
 2. Écrire ses tests, dont `expect(verifierJeu(monJeu)).toEqual([])`, qui joue
    des parties complètes et contrôle le contrat (règles pures, état
    sérialisable, hasard issu de la graine, ordinateur dans les coups permis

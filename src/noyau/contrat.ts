@@ -36,8 +36,12 @@ export type TexteTraduit = Record<Langue, string>;
 /** Graine du hasard : entier non signé sur 32 bits (D-A1-07). */
 export type Graine = number;
 
-/** Niveaux de difficulté de l'ordinateur : 1 facile à 5 difficile (D-A2-09). */
-export const NIVEAUX_ORDINATEUR = [1, 2, 3, 4, 5] as const;
+/**
+ * Niveaux de difficulté de l'ordinateur (D-A2-09) : 1 facile, 2 moyen,
+ * 3 difficile. Chaque jeu règle ses niveaux pour viser, en duel contre le
+ * niveau moyen, environ 20 %, 50 % et 80 % de victoires (mesurés par simulation).
+ */
+export const NIVEAUX_ORDINATEUR = [1, 2, 3] as const;
 export type NiveauOrdinateur = (typeof NIVEAUX_ORDINATEUR)[number];
 
 /**
@@ -70,6 +74,17 @@ export interface FicheJeu {
   tempsReflexionMaxMs?: number;
 }
 
+/**
+ * Une variante de règles que le joueur peut changer avant la partie.
+ * `cle` est une clé de l'objet `Options` du jeu ; la valeur présélectionnée
+ * est celle de `optionsParDefaut`.
+ */
+export interface Variante {
+  cle: string;
+  nom: TexteTraduit;
+  choix: readonly { valeur: string | number | boolean; nom: TexteTraduit }[];
+}
+
 /** Fin de partie, renvoyée par `estFini`. */
 export interface Fin {
   /** Places des gagnants. Vide en cas de match nul. */
@@ -100,6 +115,12 @@ export interface DonneesEcran<Vue, Coup> {
 }
 
 /**
+ * Taille logique, en pixels, sur laquelle chaque scène dessine. Phaser la met
+ * à l'échelle de l'écran : un format portrait commun à tous les jeux (D-C-04).
+ */
+export const ECRAN = { largeur: 600, hauteur: 820 } as const;
+
+/**
  * Constructeur d'une scène Phaser. Le type reste abstrait ici pour que les
  * règles n'importent jamais Phaser : seul l'écran le charge, à la demande,
  * ce qui garde le premier chargement léger (D-C-07).
@@ -119,6 +140,9 @@ export interface Jeu<Etat, Coup, Vue = Etat, Options = Record<string, never>> {
 
   /** Options utilisées quand le joueur ne change rien. */
   optionsParDefaut: Options;
+
+  /** Variantes proposées avant la partie, s'il y en a. */
+  variantes?: readonly Variante[];
 
   /** Prépare la partie à partir des joueurs (dans l'ordre des places) et d'une graine. */
   etatInitial(joueurs: readonly Joueur[], graine: Graine, options: Options): Etat;

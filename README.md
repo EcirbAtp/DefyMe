@@ -47,3 +47,11 @@ sert de modèle.
 
 Chaque demande de fusion cite les exigences dérivées (D-…) qu'elle réalise.
 La référence est le tableur des exigences du projet.
+
+## Documents du projet
+
+- [`docs/DefyMe_exigences_V1.xlsx`](docs/DefyMe_exigences_V1.xlsx) : tableur
+  des exigences (onglet Exigences = référence, colonne Statut).
+- [`docs/cadrage-technique.md`](docs/cadrage-technique.md) : choix techniques
+  et décisions.
+- [`docs/plan-etapes-2-a-8.md`](docs/plan-etapes-2-a-8.md) : plan des étapes.

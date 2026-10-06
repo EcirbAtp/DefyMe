@@ -1,0 +1,14 @@
+# Serveur de mise en relation de DefyMe, sur l'offre gratuite de Cloudflare Workers (D-A3-09).
+# Déploiement : npx wrangler deploy (depuis ce dossier, compte Cloudflare connecté).
+name = "defyme-mise-en-relation"
+main = "src/index.ts"
+compatibility_date = "2026-08-01"
+
+[[durable_objects.bindings]]
+name = "SALONS"
+class_name = "Salon"
+
+# Durable Objects à stockage SQLite : les seuls permis sur l'offre gratuite.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Salon"]

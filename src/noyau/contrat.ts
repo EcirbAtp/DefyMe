@@ -36,8 +36,12 @@ export type TexteTraduit = Record<Langue, string>;
 /** Graine du hasard : entier non signé sur 32 bits (D-A1-07). */
 export type Graine = number;
 
-/** Niveaux de difficulté de l'ordinateur : 1 facile à 5 difficile (D-A2-09). */
-export const NIVEAUX_ORDINATEUR = [1, 2, 3, 4, 5] as const;
+/**
+ * Niveaux de difficulté de l'ordinateur (D-A2-09) : 1 facile, 2 moyen,
+ * 3 difficile. Chaque jeu règle ses niveaux pour viser, en duel contre le
+ * niveau moyen, environ 20 %, 50 % et 80 % de victoires (mesurés par simulation).
+ */
+export const NIVEAUX_ORDINATEUR = [1, 2, 3] as const;
 export type NiveauOrdinateur = (typeof NIVEAUX_ORDINATEUR)[number];
 
 /**

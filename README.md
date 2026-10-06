@@ -30,7 +30,7 @@ tests/         tests automatiques (Vitest)
 1. Créer `src/jeux/<id>/index.ts` qui exporte par défaut un objet respectant
    l'interface `Jeu` de [`src/noyau/contrat.ts`](src/noyau/contrat.ts) :
    fiche, `etatInitial`, `joueurCourant`, `coupsPermis`, `jouer`, `estFini`,
-   `vuePour`, `ordinateur` (niveaux 1 à 5) et `ecran`.
+   `vuePour`, `ordinateur` (niveaux 1 à 3) et `ecran`.
 2. Écrire ses tests, dont `expect(verifierJeu(monJeu)).toEqual([])`, qui joue
    des parties complètes et contrôle le contrat (règles pures, état
    sérialisable, hasard issu de la graine, ordinateur dans les coups permis

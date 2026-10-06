@@ -3,7 +3,7 @@ import { SessionDePartie, rejouerPartie, type Place } from '../src/noyau/session
 import { allumettes } from './exemples/allumettes';
 
 const humain = (pseudo: string): Place => ({ joueur: { pseudo, couleur: '#e53935' }, controle: { type: 'humain' } });
-const ordi = (pseudo: string, niveau: 1 | 2 | 3 | 4 | 5 = 3): Place => ({
+const ordi = (pseudo: string, niveau: 1 | 2 | 3 = 2): Place => ({
   joueur: { pseudo, couleur: '#1e88e5' },
   controle: { type: 'ordinateur', niveau },
 });
@@ -41,7 +41,7 @@ describe('Session de partie', () => {
   });
 
   it('mène une partie entre ordinateurs à son terme', () => {
-    const s = SessionDePartie.creer(allumettes, [ordi('A', 1), ordi('B', 5), ordi('C', 3)], { graine: 3 });
+    const s = SessionDePartie.creer(allumettes, [ordi('A', 1), ordi('B', 3), ordi('C', 2)], { graine: 3 });
     s.faireJouerOrdinateurs();
     expect(s.fin).not.toBeNull();
     expect(s.proposerCoup(0, { prendre: 1 })).toEqual({ ok: false, raison: 'partie-finie' });
@@ -49,7 +49,7 @@ describe('Session de partie', () => {
   });
 
   it('rejoue une partie à l’identique avec la même graine (D-A1-07)', () => {
-    const places = [ordi('A', 2), ordi('B', 4)];
+    const places = [ordi('A', 1), ordi('B', 3)];
     const a = SessionDePartie.creer(allumettes, places, { graine: 77 });
     const b = SessionDePartie.creer(allumettes, places, { graine: 77 });
     a.faireJouerOrdinateurs();

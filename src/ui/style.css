@@ -330,3 +330,159 @@ a {
 .fin-partie p {
   margin: 0;
 }
+
+/* Salons : créer, rejoindre, salle d'attente (D-A3-01 à D-A3-04) */
+h2 {
+  font-size: 1.15rem;
+  margin: 20px 0 8px;
+}
+
+.bloc-salon .actions {
+  margin-top: 4px;
+}
+
+.carte-salon {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.code-salon {
+  font-size: 2.6rem;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  line-height: 1.1;
+}
+
+.qr-salon svg {
+  display: block;
+  width: min(60vw, 220px);
+  height: auto;
+  border-radius: 8px;
+}
+
+.lien-salon {
+  word-break: break-all;
+  text-align: center;
+}
+
+.compte-places {
+  font-weight: 400;
+  color: var(--texte-discret);
+}
+
+.joueurs-salon {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.joueur-salon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tactile);
+  padding: 0 4px 0 12px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.joueur-salon__nom {
+  flex: 1;
+}
+
+.pastille {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.2);
+}
+
+.bouton--petit {
+  min-width: var(--tactile);
+  padding: 0;
+  border: 0;
+}
+
+.ajout-robot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ajout-robot label {
+  flex-basis: 100%;
+  font-weight: 600;
+}
+
+.ajout-robot select {
+  flex: 1;
+  min-height: var(--tactile);
+  padding: 0 12px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font: inherit;
+}
+
+.bouton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.parametres input.champ-code {
+  font-size: 1.8rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  min-height: 60px;
+  width: 100%;
+  min-width: 0;
+}
+
+.rejoindre .bouton {
+  margin-top: 12px;
+}
+
+.erreur {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.avertissement,
+.annonce {
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-left: 4px solid #fb8c00;
+  border-radius: var(--rayon);
+}
+
+.annonce {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+}
+
+.etat-salon:empty,
+.erreur:empty {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .erreur {
+    color: #ff8a80;
+  }
+}

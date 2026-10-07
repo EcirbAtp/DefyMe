@@ -1,6 +1,8 @@
 import { changerLangue, langue, t } from '../i18n';
 import type { Langue } from '../noyau/contrat';
 import type { Registre } from '../noyau/registre';
+import { accesReel, type AccesReseau } from '../salon/acces';
+import { codeDansAdresse, normaliserCode } from '../salon/salon';
 import { ecrireReglages, lireReglages, type Reglages, type Stockage } from '../stockage/reglages';
 import { appliquerCouleur } from './couleur';
 import { el } from './dom';
@@ -8,6 +10,7 @@ import { preparerInstallation } from './installation';
 import { afficherMenuJeux } from './menu-jeux';
 import { afficherPageJeu, quitterPartie, type Monteur } from './partie';
 import { afficherParametres } from './parametres';
+import { afficherRejoindre, afficherSalonHote, type ContexteSalon } from './salon';
 
 /**
  * Coquille de l'appli : deux menus seulement, Jeux et Paramètres (D-D-02),
@@ -20,6 +23,10 @@ export interface Dependances {
   version: string;
   /** Pour les tests : remplace le montage de l'écran Phaser des jeux. */
   monterEcran?: Monteur;
+  /** Pour les tests : remplace le serveur de mise en relation et WebRTC. */
+  acces?: AccesReseau;
+  /** Pour les tests : pause avant chaque coup de l'ordinateur, en millisecondes. */
+  pauseOrdinateurMs?: number;
 }
 
 export interface Appli {
@@ -29,6 +36,10 @@ export interface Appli {
 
 export function demarrerAppli(racine: HTMLElement, deps: Dependances): Appli {
   let reglages = lireReglages(deps.stockage, deps.langueDuTelephone);
+
+  // Lien du QR code d'un salon (« …/DefyMe/?salon=K7Q2 ») : on va droit à l'entrée du salon (D-A3-02).
+  const codeDuLien = codeDansAdresse(location.href);
+  if (codeDuLien) history.replaceState(null, '', `${location.pathname}#/rejoindre/${codeDuLien}`);
   changerLangue(reglages.langue);
   appliquerCouleur(reglages.couleur);
 
@@ -66,15 +77,21 @@ export function demarrerAppli(racine: HTMLElement, deps: Dependances): Appli {
     inactif.removeAttribute('aria-current');
 
     quitterPartie();
+    const contexte: ContexteSalon = {
+      langue: langue(),
+      reglages,
+      stockage: deps.stockage,
+      monter: deps.monterEcran,
+      pauseOrdinateurMs: deps.pauseOrdinateurMs,
+      registre: deps.registre,
+      acces: deps.acces ?? accesReel,
+      adresseAppli: location.href,
+    };
     if (page === 'parametres') afficherParametres(contenu, reglages, enregistrer, deps.version);
-    else if (page === 'jeu' && id) {
-      afficherPageJeu(contenu, deps.registre, decodeURIComponent(id), {
-        langue: langue(),
-        reglages,
-        stockage: deps.stockage,
-        monter: deps.monterEcran,
-      });
-    } else afficherMenuJeux(contenu, deps.registre, langue());
+    else if (page === 'jeu' && id) afficherPageJeu(contenu, deps.registre, decodeURIComponent(id), contexte);
+    else if (page === 'salon' && id) afficherSalonHote(contenu, decodeURIComponent(id), contexte);
+    else if (page === 'rejoindre') afficherRejoindre(contenu, normaliserCode(id && decodeURIComponent(id)), contexte);
+    else afficherMenuJeux(contenu, deps.registre, langue());
   }
 
   window.addEventListener('hashchange', afficher);

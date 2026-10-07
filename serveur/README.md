@@ -30,7 +30,7 @@ gratuite (D-A3-09).
 ```bash
 cd serveur
 npm install
-npm test        # serveur dans le moteur de Cloudflare + 8 onglets en vrai WebRTC
+npm test        # serveur dans le moteur de Cloudflare + onglets en vrai WebRTC (salons de l'appli compris)
 npm run dev     # serveur local sur ws://localhost:8787
 ```
 

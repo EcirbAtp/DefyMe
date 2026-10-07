@@ -33,5 +33,9 @@ export function afficherMenuJeux(conteneur: HTMLElement, registre: Registre, lan
   conteneur.replaceChildren(
     el('h1', {}, t('jeux.titre')),
     jeux.length > 0 ? liste : el('p', { class: 'vide' }, t('jeux.vide')),
+    // Un invité entre ici par le code reçu de l'hôte (D-A3-02).
+    jeux.length > 0
+      ? el('div', { class: 'actions' }, el('a', { class: 'bouton bouton--discret', href: '#/rejoindre', 'data-action': 'rejoindre-salon' }, t('salon.rejoindre')))
+      : '',
   );
 }

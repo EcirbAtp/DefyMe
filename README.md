@@ -20,6 +20,8 @@ src/
   noyau/       contrat de jeu, registre, session de partie, hasard à graine
   jeux/<id>/   un dossier par jeu (index.ts exporte le jeu par défaut)
     petits-chevaux/  règles, plateau, ordinateur, écran Phaser, pack de thème
+    huit-americain/  règles, ordinateur, présentation (testée sans affichage),
+                     écran Phaser, pack de thème
   reseau/      salons WebRTC en étoile autour de l'hôte, sans connaître aucun jeu
   salon/       logique des salons : lien du QR code, places, robots, lancement
   ui/          menus Jeux et Paramètres, partie sur un seul téléphone, salons

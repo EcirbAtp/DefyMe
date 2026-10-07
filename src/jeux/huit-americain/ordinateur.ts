@@ -183,6 +183,7 @@ function imaginer(vue: Vue, h: Hasard): Etat {
   });
   return {
     options: vue.options,
+    joueurs: vue.joueurs,
     mains,
     pioche: inconnues,
     defausse: vue.defausse,
